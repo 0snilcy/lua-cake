@@ -1,11 +1,11 @@
-package = "lua-cake"
-version = "dev-1"
+package = "cake"
+version = "0.1.2-1"
 source = {
    url = "git+ssh://git@github.com/0snilcy/lua-cake.git"
 }
 description = {
-   homepage = "*** please enter a project homepage ***",
-   license = "*** please specify a license ***"
+   homepage = "https://github.com/0snilcy/lua-cake",
+   license = "MIT/X11"
 }
 build = {
    type = "builtin",
@@ -14,5 +14,5 @@ build = {
    }
 }
 dependencies = {
-   "lua >= 5.1, < 5.4",
+   "lua >= 5.1, <= 5.4",
 }
