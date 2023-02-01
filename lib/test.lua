@@ -35,14 +35,11 @@ local function colorize(data)
 end
 
 local function tostr(data)
-	if type(data) == "table" then
+	if is.table(data) then
 		return ("{ %s }"):format(table.concat(
-			tbl.map(data, function(item)
-				if type(item) == "table" then
-					return tostr(item)
-				end
-
-				return colorize(item)
+			tbl.map(data, function(value, key)
+				value = is.table(value) and colors.magenta(("{ #%s }"):format(#tbl.keys(value))) or colorize(value)
+				return is.number(key) and value or ("%s = %s"):format(key, value)
 			end),
 			", "
 		))
@@ -103,8 +100,7 @@ local function print_state(data, shift)
 			data.skip and "s" or "",
 		}, " "))
 
-		-- log("Config", config)
-		if data.test and (config.report.full or results.fail > 0) then
+		if data.test and (config.report.full or results.fail > 0) or data.only then
 			for _, value in ipairs(data.expects or {}) do
 				print_state(value, shift + 1)
 			end
@@ -257,23 +253,24 @@ end
 local function get_mt(is_test)
 	return {
 		__index = {
-			only = function(title, fn, config)
-				config = config
+			only = function(title, fn)
 				return call({ is_test = is_test, only = true }, title, fn)
 			end,
-			skip = function(title, fn, config)
-				config = config
+			skip = function(title, fn)
 				return call({ is_test = is_test, skip = true }, title, fn)
 			end,
 		},
-		__call = function(_, title, fn, config)
-			config = config
-			return call({ is_test = is_test, config }, title, fn)
+		__call = function(_, title, fn)
+			return call({ is_test = is_test }, title, fn)
 		end,
 	}
 end
 
 M.test = setmetatable({}, get_mt(true))
 M.describe = setmetatable({}, get_mt())
+
+function M.set_config(cfg)
+	config = tbl.deepMerge(config, cfg)
+end
 
 return M

@@ -1,7 +1,7 @@
 local M = {}
 
 function M.foreach(t, cb)
-	for key, value in ipairs(t) do
+	for key, value in pairs(t) do
 		cb(value, key)
 	end
 end
@@ -32,9 +32,9 @@ M.filter = setmetatable({}, {
 function M.map(t, cb)
 	local result = {}
 
-	for _, value in ipairs(t) do
-		table.insert(result, cb(value))
-	end
+	M.foreach(t, function(value, key)
+		M.insert(result, cb(value, key))
+	end)
 
 	return result
 end
@@ -109,17 +109,56 @@ function M.includes(t, item)
 	return false
 end
 
-function M.reduce(t, fn, r)
-	r = r or {}
+function M.reduce(t, fn, result)
+	result = result or {}
 
 	M.foreach(t, function(value, key)
-		r = fn(r, value, key)
+		fn(result, value, key)
 	end)
 
-	return r
+	return result
+end
+
+local function reduce_tbl(t, target)
+	return M.reduce(t, function(result, value, key)
+		if is.number(key) then
+			M.insert(result, value)
+		else
+			result[key] = value
+		end
+	end, target)
+end
+
+function M.merge(first, second)
+	local result = reduce_tbl(first, {})
+	return reduce_tbl(second, result)
+end
+
+function M.deepMerge(first, second)
+	-- log("deepMerge", {
+	-- 	first = first,
+	-- 	second = second,
+	-- })
+	return M.reduce(second, function(result, second_value, key)
+		local first_value = first[key]
+		result[key] = first_value
+
+		if is.table(second_value) then
+			result[key] = M.deepMerge(is.table(first_value) and first_value or {}, second_value)
+		else
+			result[key] = second_value
+		end
+
+		-- log("Result", result)
+	end, M.merge({}, first))
+end
+
+function M.insert(t, ...)
+	for _, value in ipairs({ ... }) do
+		table.insert(t, value)
+	end
 end
 
 M.concat = table.concat
-M.insert = table.insert
 
 return M
