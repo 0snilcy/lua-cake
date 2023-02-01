@@ -15,4 +15,5 @@ build = {
 }
 dependencies = {
    "lua >= 5.1, <= 5.4",
+   "lua-term == 0.7-1"
 }

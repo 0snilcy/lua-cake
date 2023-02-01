@@ -1,0 +1,5 @@
+{
+  "execMap": {
+    "lua": "clear && lua -l lib"
+  }
+}
