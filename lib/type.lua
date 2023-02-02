@@ -1,4 +1,5 @@
 local function truthy(arg)
+  -- print('truthy', arg, type(arg))
 	local type = type(arg)
 
 	if type == "string" then

@@ -8,17 +8,28 @@ function M.foreach(t, cb)
 		end
 	end
 
-  return true
+	return true
+end
+
+function M.foreachi(t, cb)
+	for key, value in ipairs(t) do
+		local need_break = cb(value, key)
+		if need_break then
+			return false
+		end
+	end
+
+	return true
 end
 
 local function filter(t, cb)
 	local result = {}
 
-	for _, value in ipairs(t) do
+	M.foreach(t, function(value)
 		if cb(value) then
 			table.insert(result, value)
 		end
-	end
+	end)
 
 	return result
 end
@@ -65,27 +76,27 @@ function M.keys(t)
 end
 
 function M.find(t, fn)
-  local result = nil
-  M.foreach(t, function (value)
+	local result = nil
+	M.foreach(t, function(value)
 		if fn(value) then
 			result = value
-      return true
+			return true
 		end
-  end)
+	end)
 
 	return result
 end
 
 function M.every(t, fn)
-  return M.foreach(t, function (value, key)
-    return not fn(value, key)
-  end)
+	return M.foreach(t, function(value, key)
+		return not fn(value, key)
+	end)
 end
 
 function M.some(t, fn)
-  return not M.foreach(t, function (value, key)
-    return fn(value, key)
-  end)
+	return not M.foreach(t, function(value, key)
+		return fn(value, key)
+	end)
 end
 
 function M.isEqual(first, second)
@@ -162,6 +173,20 @@ function M.insert(t, ...)
 	end
 end
 
-M.concat = table.concat
+function M.flat(t)
+	return M.reduce(t, function(result, value, key)
+		if is.number(key) and is.table(value) then
+			M.foreachi(value, function(i_value)
+				tbl.insert(result, i_value)
+			end)
+		else
+			tbl.insert(result, value)
+		end
+	end)
+end
+
+M.concat = function(data, separator)
+	return table.concat(tbl.map(tbl.filter.truthy(M.flat(data)), tostring), separator or " ")
+end
 
 return M

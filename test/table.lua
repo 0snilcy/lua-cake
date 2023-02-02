@@ -130,7 +130,7 @@ describe("tables", function()
 		end)).toBe(false)
 	end)
 
-	test.only("find", function()
+	test("find", function()
 		expect(tbl.find({ 1, 2, 3, 4, 5 }, function(item)
 			return item == 3
 		end)).toBe(3)
@@ -139,5 +139,9 @@ describe("tables", function()
 		expect(tbl.find({ 1, 2, t }, function(item)
 			return is.table(item) and item.name == "JR"
 		end)).toBe(t)
+	end)
+
+	test.only("flat", function()
+		expect(tbl.flat({ 1, 2, { 3, 4 }, 5 })).toEqual({ 1, 2, 3, 4, 5 })
 	end)
 end)
