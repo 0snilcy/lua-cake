@@ -2,8 +2,13 @@ local M = {}
 
 function M.foreach(t, cb)
 	for key, value in pairs(t) do
-		cb(value, key)
+		local need_break = cb(value, key)
+		if need_break then
+			return false
+		end
 	end
+
+  return true
 end
 
 local function filter(t, cb)
@@ -60,23 +65,27 @@ function M.keys(t)
 end
 
 function M.find(t, fn)
-	for _, value in pairs(t) do
+  local result = nil
+  M.foreach(t, function (value)
 		if fn(value) then
-			return value
+			result = value
+      return true
 		end
-	end
+  end)
 
-	return nil
+	return result
 end
 
 function M.every(t, fn)
-	for key, value in pairs(t) do
-		if not fn(value, key) then
-			return false
-		end
-	end
+  return M.foreach(t, function (value, key)
+    return not fn(value, key)
+  end)
+end
 
-	return true
+function M.some(t, fn)
+  return not M.foreach(t, function (value, key)
+    return fn(value, key)
+  end)
 end
 
 function M.isEqual(first, second)
@@ -135,10 +144,6 @@ function M.merge(first, second)
 end
 
 function M.deepMerge(first, second)
-	-- log("deepMerge", {
-	-- 	first = first,
-	-- 	second = second,
-	-- })
 	return M.reduce(second, function(result, second_value, key)
 		local first_value = first[key]
 		result[key] = first_value
@@ -148,8 +153,6 @@ function M.deepMerge(first, second)
 		else
 			result[key] = second_value
 		end
-
-		-- log("Result", result)
 	end, M.merge({}, first))
 end
 

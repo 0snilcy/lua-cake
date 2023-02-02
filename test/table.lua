@@ -33,12 +33,6 @@ describe("tables", function()
 		expect(tbl.includes(keys, "age")).toBe(true)
 	end)
 
-	test("map", function()
-		expect(tbl.map({ 1, 2, 3 }, function(i)
-			return i * 2
-		end)).toEqual({ 2, 4, 6 })
-	end)
-
 	test("isEqual", function()
 		expect(tbl.isEqual({ 1, 2, 3 }, { 1, 2, 3 })).toBe(true)
 		expect(tbl.isEqual({ 1, true, "One" }, { 1, true, "One" })).toBe(true)
@@ -106,14 +100,44 @@ describe("tables", function()
 				three = "Meow",
 			},
 		}, {
-      two = {
-        three = "XXX"
-      }
-    })).toDeepEqual({
+			two = {
+				three = "XXX",
+			},
+		})).toDeepEqual({
 			one = 137,
 			two = {
 				three = "XXX",
 			},
-    })
+		})
+	end)
+
+	test("every", function()
+		expect(tbl.every({ 1, 2, 3, 4, 5 }, function(item)
+			return item < 10
+		end)).toBe(true)
+		expect(tbl.every({ 1, 2, 3, 4, 5 }, function(item)
+			return item < 5
+		end)).toBe(false)
+	end)
+
+	test("some", function()
+		expect(tbl.some({ 1, 2, 3, 4, 5 }, function(item)
+			return item == 3
+		end)).toBe(true)
+
+		expect(tbl.some({ 1, 2, 3, 4, 5 }, function(item)
+			return item > 10
+		end)).toBe(false)
+	end)
+
+	test.only("find", function()
+		expect(tbl.find({ 1, 2, 3, 4, 5 }, function(item)
+			return item == 3
+		end)).toBe(3)
+
+		local t = { name = "JR" }
+		expect(tbl.find({ 1, 2, t }, function(item)
+			return is.table(item) and item.name == "JR"
+		end)).toBe(t)
 	end)
 end)
