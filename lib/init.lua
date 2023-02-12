@@ -1,10 +1,10 @@
-is = require("lib.type")
+is = require("cake.lib.type")
 
-tbl = require("lib.table")
-log = require("lib.print")
-str = require("lib.string")
-cls = require("lib.class")
+tbl = require("cake.lib.table")
+log = require("cake.lib.print")
+str = require("cake.lib.string")
+cls = require("cake.lib.class")
 
-expect = require("lib.test").expect
-test = require("lib.test").test
-describe = require("lib.test").describe
+expect = require("cake.lib.test").expect
+test = require("cake.lib.test").test
+describe = require("cake.lib.test").describe
