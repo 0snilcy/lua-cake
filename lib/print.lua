@@ -110,7 +110,7 @@ local function table_tostring(data, config, shift)
 	end
 end
 
-local log = function(title, data, config)
+local _log = function(title, data, config)
 	config = tbl.deepMerge({
 		length = false,
 		number_ids = false,
@@ -121,27 +121,31 @@ local log = function(title, data, config)
 		shift_length = 3,
 	}, config or {})
 
-	print(("%s: %s"):format(title, table_tostring(data, config)))
+	return (("%s: %s"):format(title, table_tostring(data, config)))
 end
 
--- local data = {
--- 	17,
--- 	"print",
--- 	one = "ZUZ",
--- 	num = 137,
--- 	is_valid = false,
--- 	method = function() end,
--- 	inner = {
--- 		17,
--- 		"print",
--- 		one = "ZUZ",
--- 		num = 137,
--- 		is_valid = false,
--- 		method = function() end,
--- 	},
--- }
+local log = function(title, data, config)
+	print(_log(title, data, config))
+end
 
--- log("Table", tbl, {
+local data = {
+	17,
+	"print",
+	one = "ZUZ",
+	num = 137,
+	is_valid = false,
+	method = function() end,
+	inner = {
+		17,
+		"print",
+		one = "ZUZ",
+		num = 137,
+		is_valid = false,
+		method = function() end,
+	},
+}
+
+-- log("Table", data, {
 -- 	deep = 2,
 -- })
 
