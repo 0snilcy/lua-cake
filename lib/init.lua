@@ -1,6 +1,7 @@
 is = require("cake.type")
 tbl = require("cake.table")
-log = require("cake.print")
+log = require("cake.print").log
+log_format = require("cake.print").log_format
 str = require("cake.string")
 cls = require("cake.class")
 
