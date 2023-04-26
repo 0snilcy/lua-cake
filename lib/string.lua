@@ -1,6 +1,4 @@
-local M = {
-	one = 123,
-}
+local M = {}
 
 function M.split(string, separator)
 	local res = {}

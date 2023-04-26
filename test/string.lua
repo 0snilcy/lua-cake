@@ -4,7 +4,9 @@ require("lib.test").set_config({
 	},
 })
 
-local str = require("lib.string")
+print("test.string", str)
+-- log("str", str)
+-- local str = require("lib.string")
 
 describe("string", function()
 	test("split", function()
