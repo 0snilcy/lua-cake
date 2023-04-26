@@ -189,4 +189,12 @@ M.concat = function(data, separator)
 	return table.concat(tbl.map(tbl.filter.truthy(M.flat(data)), tostring), separator or " ")
 end
 
+M.first = function(t)
+	return t[0]
+end
+
+M.last = function(t)
+	return t[#t]
+end
+
 return M

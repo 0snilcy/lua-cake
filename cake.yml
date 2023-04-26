@@ -92,7 +92,17 @@ structs:
       args:
         - type: any
 
+  String:
+    split:
+      args:
+        - type: string
+          required: false
+        - type: string
+          required: false
+
 globals:
+  str:
+    struct: String
   tbl:
     struct: Table
   is:
