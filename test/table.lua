@@ -141,7 +141,7 @@ describe("tables", function()
 		end)).toBe(t)
 	end)
 
-	test.only("flat", function()
+	test("flat", function()
 		expect(tbl.flat({ 1, 2, { 3, 4 }, 5 })).toEqual({ 1, 2, 3, 4, 5 })
 	end)
 end)

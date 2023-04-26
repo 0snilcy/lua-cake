@@ -120,7 +120,7 @@ function M.isDeepEqual(first, second)
 end
 
 function M.includes(t, item)
-	for _, value in pairs(t) do
+	for _, value in ipairs(t) do
 		if item == value then
 			return true
 		end

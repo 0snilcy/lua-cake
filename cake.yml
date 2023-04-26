@@ -1,0 +1,111 @@
+---
+structs:
+  Table:
+    foreach:
+      args:
+        - type: table
+        - type: function
+    foreachi:
+      args:
+        - type: table
+        - type: function
+    filter:
+      args:
+        - type: table
+        - type: function
+    map:
+      args:
+        - type: table
+        - type: function
+    values:
+      args:
+        - type: table
+    keys:
+      args:
+        - type: table
+    find:
+      args:
+        - type: table
+        - type: function
+    every:
+      args:
+        - type: table
+        - type: function
+    some:
+      args:
+        - type: table
+        - type: function
+    isEqual:
+      args:
+        - type: table
+        - type: table
+    isDeepEqual:
+      args:
+        - type: table
+        - type: table
+    includes:
+      args:
+        - type: table
+        - type: function
+    reduce:
+      args:
+        - type: table
+        - type: function
+        - type: table
+          required: false
+    merge:
+      args:
+        - type: table
+        - type: table
+    insert:
+      args:
+        - type: table
+        - type: ...
+    flat:
+      args:
+        - type: table
+    concat:
+      args:
+        - type: table
+        - type: string
+
+  Type:
+    table:
+      args:
+        - type: any
+    string:
+      args:
+        - type: any
+    boolean:
+      args:
+        - type: any
+    number:
+      args:
+        - type: any
+    fn:
+      args:
+        - type: any
+    truthy:
+      args:
+        - type: any
+    falsy:
+      args:
+        - type: any
+
+globals:
+  tbl:
+    struct: Table
+  is:
+    struct: Type
+  log_string:
+    args:
+      - type: string
+      - type: table
+      - type: table
+        required: false
+  log:
+    args:
+      - type: string
+      - type: table
+      - type: table
+        required: false
