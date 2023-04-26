@@ -1,5 +1,5 @@
 package = "cake"
-version = "0.3.1-1"
+version = "0.3.3-1"
 source = {
 	url = "git+ssh://git@github.com/0snilcy/lua-cake.git",
 }
@@ -11,8 +11,14 @@ build = {
 	type = "builtin",
 	modules = {
 		["cake"] = "lib/init.lua",
+		["cake.string"] = "lib/string.lua",
+		["cake.class"] = "lib/class.lua",
+		["cake.utils"] = "lib/utils.lua",
+		["cake.test"] = "lib/test.lua",
+		["cake.type"] = "lib/type.lua",
+		["cake.table"] = "lib/table.lua",
+		["cake.print"] = "lib/print.lua",
 	},
-	copy_directories = { "lib" },
 }
 dependencies = {
 	"lua >= 5.1",
