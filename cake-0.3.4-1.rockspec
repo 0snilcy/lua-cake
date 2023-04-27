@@ -1,5 +1,5 @@
 package = "cake"
-version = "0.3.4-1"
+version = "0.3.5-1"
 source = {
 	url = "git+ssh://git@github.com/0snilcy/lua-cake.git",
 }

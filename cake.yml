@@ -68,6 +68,14 @@ structs:
       args:
         - type: table
         - type: string
+    first:
+      args:
+        - type: table
+          required: false
+    last:
+      args:
+        - type: table
+          required: false
 
   Type:
     table:
